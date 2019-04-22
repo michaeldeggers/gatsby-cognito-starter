@@ -26,8 +26,6 @@ export default () => {
         {` `}
         <Link to="/app/profile">Profile</Link>
         {` `}
-        <Link to="/app/test">Test</Link>
-        {` `}
         {isLoggedIn() ? (
           <SignOutButton/>
         ) : null}

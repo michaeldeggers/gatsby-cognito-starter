@@ -23,7 +23,12 @@
     "react-redux": "^7.0.2"
   },
   "devDependencies": {
-    "prettier": "^1.17.0"
+    "babel-jest": "^24.7.1",
+    "babel-preset-gatsby": "^0.1.11",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^24.7.1",
+    "prettier": "^1.17.0",
+    "react-test-renderer": "^16.8.6"
   },
   "keywords": [
     "gatsby"
@@ -36,7 +41,7 @@
     "format": "prettier --write src/**/*.{js,jsx}",
     "start": "npm run dev",
     "serve": "gatsby serve",
-    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\""
+    "test": "jest"
   },
   "repository": {
     "type": "git",
