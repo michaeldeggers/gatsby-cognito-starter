@@ -5,8 +5,6 @@ import Layout from '../components/Layout';
 import axios from 'axios';
 import { graphql } from 'gatsby';
 
-const ENV = isBrowser ? window._env_.ENV_NAME : null;
-
 class IndexPage extends React.Component {
     state = {
         loading: false,
@@ -35,7 +33,7 @@ class IndexPage extends React.Component {
                     keywords={[`gatsby`, `application`, `react`]}
                 />
                 <h1>Hello {isLoggedIn() ? 'user' : 'world'}!</h1>
-                <span>ENV: {`${ENV}`}</span>
+                <span>ENV: {`${process.env.GATSBY_ENV}`}</span>
                 <h2>{character.name} With His Pupper</h2>
                 <p>Rick & Morty API data loads at build time.</p>
                 <div>

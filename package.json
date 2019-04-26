@@ -20,7 +20,8 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-helmet": "^5.2.0",
-    "react-redux": "^7.0.2"
+    "react-redux": "^7.0.2",
+    "redux-persist": "^5.10.0"
   },
   "devDependencies": {
     "babel-jest": "^24.7.1",
@@ -36,10 +37,9 @@
   "license": "MIT",
   "scripts": {
     "build": "gatsby telemetry --disable && gatsby build",
-    "dev": "chmod +x env.sh && env.sh && cp env-config.js public/ && gatsby develop -p 8080",
     "develop": "gatsby develop -p 8080",
     "format": "prettier --write src/**/*.{js,jsx}",
-    "start": "npm run dev",
+    "start": "npm run develop",
     "serve": "gatsby serve",
     "test": "jest"
   },
