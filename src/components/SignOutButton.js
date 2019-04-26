@@ -1,5 +1,14 @@
 import React, { Component } from 'react';
 import { Auth } from 'aws-amplify';
+import { connect } from 'react-redux';
+
+const mapDispatchToProps = dispatch => {
+    return {
+        logOut: () => {
+            dispatch({ type: `LOG_OUT` });
+        },
+    };
+};
 
 class SignOutButton extends Component {
     render() {
@@ -9,7 +18,7 @@ class SignOutButton extends Component {
     signOut = () => {
         Auth.signOut()
             .then(() => {
-                // update store
+                this.props.logOut();
                 console.log('signed out');
             })
             .catch(e => {
@@ -18,4 +27,7 @@ class SignOutButton extends Component {
     };
 }
 
-export default SignOutButton;
+export default connect(
+    null,
+    mapDispatchToProps
+)(SignOutButton);

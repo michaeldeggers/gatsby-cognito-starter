@@ -1,13 +1,21 @@
 import React, { Component } from 'react';
 import { isBrowser } from '../utils/auth';
 import { Auth } from 'aws-amplify';
-import { connect } from "react-redux";
+import { connect } from 'react-redux';
 
-const wrapElementWithDispatch = () => {
-
+const mapDispatchToProps = dispatch => {
+    return {
+        logIn: () => {
+            dispatch({ type: `LOG_IN` });
+        },
+    };
 };
 
 class SignInButton extends Component {
+    constructor(props) {
+        super(props);
+        console.log(props);
+    }
     render() {
         return <button onClick={this.signIn}>Sign in</button>;
     }
@@ -18,11 +26,14 @@ class SignInButton extends Component {
         }
         Auth.federatedSignIn()
             .then(user => {
-              // update store
-              console.log(user);
+                this.props.logIn();
+                console.log(user);
             })
             .catch(e => console.error(e));
     };
 }
 
-export default connect()(SignInButton);
+export default connect(
+    null,
+    mapDispatchToProps
+)(SignInButton);

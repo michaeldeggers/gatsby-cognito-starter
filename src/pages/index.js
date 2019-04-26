@@ -1,11 +1,20 @@
 import React from 'react';
-import { isBrowser, isLoggedIn } from '../utils/auth';
 import SEO from '../components/SEO';
 import Layout from '../components/Layout';
 import axios from 'axios';
 import { graphql } from 'gatsby';
+import { connect } from 'react-redux';
+
+const mapStateToProps = ({ loggedIn }) => {
+    return { loggedIn };
+};
 
 class IndexPage extends React.Component {
+    constructor(props) {
+        super(props);
+        console.log(props);
+    }
+
     state = {
         loading: false,
         error: false,
@@ -32,7 +41,7 @@ class IndexPage extends React.Component {
                     title="Home"
                     keywords={[`gatsby`, `application`, `react`]}
                 />
-                <h1>Hello {isLoggedIn() ? 'user' : 'world'}!</h1>
+                <h1>Hello {props.loggedIn ? 'user' : 'world'}!</h1>
                 <span>ENV: {`${process.env.GATSBY_ENV}`}</span>
                 <h2>{character.name} With His Pupper</h2>
                 <p>Rick & Morty API data loads at build time.</p>
@@ -100,4 +109,4 @@ export const GatsbyQuery = graphql`
     }
 `;
 
-export default IndexPage;
+export default connect(mapStateToProps)(IndexPage);

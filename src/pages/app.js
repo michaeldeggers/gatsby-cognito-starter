@@ -5,27 +5,36 @@ import Layout from '../components/Layout';
 import Profile from '../components/Profile';
 import Login from '../components/Login';
 import { Auth } from 'aws-amplify';
+import { connect } from 'react-redux';
+
+const mapStateToProps = ({ loggedIn }) => {
+    return { loggedIn };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        logIn: () => {
+            dispatch({ type: `LOG_IN` });
+        },
+        logOut: () => {
+            dispatch({ type: `LOG_OUT` });
+        },
+    };
+};
 
 class App extends React.Component {
     constructor(props) {
         super(props);
 
-        this.userHasAuthenticated = this.userHasAuthenticated.bind(this);
-
         this.state = {
-            isAuthenticated: false,
             isAuthenticating: true,
         };
-    }
-
-    userHasAuthenticated(authenticated) {
-        this.setState({ isAuthenticated: authenticated });
     }
 
     componentDidMount = async () => {
         try {
             await Auth.currentSession();
-            this.userHasAuthenticated(true);
+            props.logIn();
         } catch (e) {
             if (e !== 'No current user') {
                 alert(e);
@@ -36,11 +45,6 @@ class App extends React.Component {
     };
 
     render() {
-        const childProps = {
-            isAuthenticated: this.state.isAuthenticated,
-            userHasAuthenticated: this.userHasAuthenticated,
-        };
-
         return (
             !this.state.isAuthenticating && (
                 <Layout props={childProps}>
@@ -48,9 +52,8 @@ class App extends React.Component {
                         <PrivateRoute
                             path="/app/profile"
                             component={Profile}
-                            props={childProps}
                         />
-                        <Login path="/app/login" {...childProps} />
+                        <Login path="/app/login" />
                     </Router>
                 </Layout>
             )
@@ -58,4 +61,4 @@ class App extends React.Component {
     }
 }
 
-export default App;
+export default connect(mapStateToProps, mapDispatchToProps)(App);

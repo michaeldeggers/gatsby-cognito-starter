@@ -1,35 +1,39 @@
-import React from "react"
-import { Link } from "gatsby"
-import { isLoggedIn } from "../utils/auth"
-import SignOutButton from "./SignOutButton"
+import React from 'react';
+import { Link } from 'gatsby';
+import SignOutButton from './SignOutButton';
+import { connect } from 'react-redux';
 
-export default () => {
-  const content = { message: "", login: true }
-  if (isLoggedIn()) {
-    content.message = `Hello, User`
-  } else {
-    content.message = "You are not logged in"
-  }
-  return (
-    <div
-      style={{
-        display: "flex",
-        flex: "1",
-        justifyContent: "space-between",
-        borderBottom: "1px solid #d1c1e0",
-      }}
-    >
-      <span>{content.message}</span>
+const mapStateToProps = ({ loggedIn }) => {
+    return { loggedIn };
+};
 
-      <nav>
-        <Link to="/">Home</Link>
-        {` `}
-        <Link to="/app/profile">Profile</Link>
-        {` `}
-        {isLoggedIn() ? (
-          <SignOutButton/>
-        ) : null}
-      </nav>
-    </div>
-  )
-}
+const NavBar = ({ loggedIn }) => {
+    const content = { message: '', login: true };
+    if (loggedIn) {
+        content.message = `Hello, User`;
+    } else {
+        content.message = 'You are not logged in';
+    }
+    return (
+        <div
+            style={{
+                display: 'flex',
+                flex: '1',
+                justifyContent: 'space-between',
+                borderBottom: '1px solid #d1c1e0',
+            }}
+        >
+            <span>{content.message}</span>
+
+            <nav>
+                <Link to="/">Home</Link>
+                {` `}
+                <Link to="/app/profile">Profile</Link>
+                {` `}
+                {loggedIn ? <SignOutButton /> : null}
+            </nav>
+        </div>
+    );
+};
+
+export default connect(mapStateToProps)(NavBar);

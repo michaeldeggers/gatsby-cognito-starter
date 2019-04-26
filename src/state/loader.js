@@ -2,7 +2,7 @@ class StateLoader {
     loadState() {
         try {
             let serializedState = localStorage.getItem(
-                'http://contoso.com:state'
+                'cloud-factory:state'
             );
 
             if (serializedState === null) {
@@ -18,7 +18,7 @@ class StateLoader {
     saveState(state) {
         try {
             let serializedState = JSON.stringify(state);
-            localStorage.setItem('http://contoso.com:state', serializedState);
+            localStorage.setItem('cloud-factory:state', serializedState);
         } catch (err) {}
     }
 
