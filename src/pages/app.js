@@ -34,7 +34,7 @@ class App extends React.Component {
   componentDidMount = async () => {
     try {
       await Auth.currentSession();
-      props.logIn();
+      this.props.logIn();
     } catch (e) {
       if (e !== 'No current user') {
         alert(e);
@@ -45,6 +45,10 @@ class App extends React.Component {
   };
 
   render() {
+    const childProps = {
+      isAuthenticated: this.props.loggedIn
+    };
+
     return (
       !this.state.isAuthenticating && (
         <Layout props={childProps}>

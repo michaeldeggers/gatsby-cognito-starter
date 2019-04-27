@@ -35,11 +35,12 @@ class IndexPage extends React.Component {
 
     const { img, breed } = this.state.pupper;
     const loading = this.state.loading;
+    const loggedIn = this.props.loggedIn;
 
     return (
       <Layout>
         <SEO title="Home" keywords={[`gatsby`, `application`, `react`]} />
-        <h1>Hello {props.loggedIn ? 'user' : 'world'}!</h1>
+        <h1>Hello {loggedIn ? 'user' : 'world'}!</h1>
         <span>ENV: {`${process.env.GATSBY_ENV}`}</span>
         <h2>{character.name} With His Pupper</h2>
         <p>Rick & Morty API data loads at build time.</p>
