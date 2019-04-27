@@ -95,3 +95,25 @@ Looking for more guidance? Full documentation for Gatsby lives [on the website](
 [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/gatsbyjs/gatsby-starter-default)
 
 <!-- AUTO-GENERATED-CONTENT:END -->
+
+## Cognito Updates
+
+This starter was built from Gatsby's default starter - gatsby-starter-default.
+
+### Changes
+
+- AWS Amplify was added for SSO login--currently configured for federated login with Facebook or Google.
+
+- Redux and Redux Persist were added to have user state persist across both guarded and non-guarded routes.
+
+- Should be noted that all of these changes were extracted from GatsbyJS tutorials, AWS Amplify Docs, Redux Docs, and a few developer posts on Medium. I merely brought them together.
+
+-- These files can be found here:
+
+    .
+    |-- state
+    |   |-- createStore.js
+    |   |-- loader.js
+    |-- gatsby-browser.js
+    |-- wrap-with-provider.js
+

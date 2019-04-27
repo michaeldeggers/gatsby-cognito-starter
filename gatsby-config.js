@@ -1,8 +1,8 @@
 module.exports = {
   siteMetadata: {
-    title: `Gatsby Default Starter`,
-    description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
-    author: `@gatsbyjs`,
+    title: `Gatsby Cognito Starter`,
+    description: `This starter configures your site with SSO via Cognito and AWS Amplify, and state management with redux and redux-persist`,
+    author: `@michaeldeggers`,
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
@@ -18,7 +18,7 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `gatsby-starter-default`,
+        name: `gatsby-cognito-starter`,
         short_name: `starter`,
         start_url: `/`,
         background_color: `#663399`,
