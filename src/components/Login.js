@@ -1,45 +1,62 @@
-import React, { Component } from "react"
-import { navigate } from "gatsby"
-import { getCurrentAuthenticatedUser, signIn, signOut } from "../utils/auth"
-import SignInButton from "./SignInButton"
-import SignOutButton from "./SignOutButton"
+import React, { Component } from 'react';
+import { navigate } from 'gatsby';
+import { getCurrentAuthenticatedUser } from '../utils/auth';
+import SignInButton from './SignInButton';
+import SignOutButton from './SignOutButton';
+import { connect } from 'react-redux';
 
-const isBrowser = () => typeof window !== "undefined"
+const mapStateToProps = ({ loggedIn }) => {
+  return { loggedIn };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    logIn: () => {
+      dispatch({ type: `LOG_IN` });
+    },
+    logOut: () => {
+      dispatch({ type: `LOG_OUT` });
+    },
+  };
+};
 
 class Login extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
-      authState: "loading",
+      authState: 'loading',
       authData: null,
       authError: null,
-    }
+    };
   }
 
   componentDidMount() {
-    console.log("on component mount", this.props)
-    getCurrentAuthenticatedUser().then(user => {
-      console.log(user)
-      this.props.userHasAuthenticated(true);
-      this.setState({ authState: "signedIn" })
-      navigate('/app/profile')
-    }).catch(e => {
-      console.log(e)
-      this.setState({ authState: "signIn" })
-    })
+    getCurrentAuthenticatedUser()
+      .then(user => {
+        // TODO: add user to state
+        if (!this.props.loggedIn) this.props.logIn();
+        this.setState({ authState: 'signedIn' });
+        navigate('/app/profile');
+      })
+      .catch(e => {
+        console.log(e);
+        this.setState({ authState: 'signIn' });
+      });
   }
 
   render() {
-    const { authState } = this.state
+    const { authState } = this.state;
     return (
       <div className="App">
-        {authState === "loading" && (<div>loading...</div>)}
-        {authState === "signIn" && <SignInButton />}
-        {authState === "signedIn" && <SignOutButton />}
+        {authState === 'loading' && <div>loading...</div>}
+        {authState === 'signIn' && <SignInButton />}
+        {authState === 'signedIn' && <SignOutButton />}
       </div>
-    )
+    );
   }
 }
 
-export default Login
-
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Login);

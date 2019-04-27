@@ -1,7 +1,7 @@
-import React from "react"
-import { navigate } from "gatsby"
+import React from 'react';
+import { navigate } from 'gatsby';
 
-const isBrowser = () => typeof window !== "undefined"
+const isBrowser = () => typeof window !== 'undefined';
 
 const PrivateRoute = ({ component: Component, props, ...rest }) => {
   if (
@@ -10,11 +10,11 @@ const PrivateRoute = ({ component: Component, props, ...rest }) => {
     window.location.pathname !== `/app/login`
   ) {
     // If we’re not logged in, redirect to the home page.
-    navigate(`/app/login`)
-    return null
+    navigate(`/app/login`);
+    return null;
   }
 
-  return <Component {...rest} />
-}
+  return <Component {...rest} />;
+};
 
-export default PrivateRoute
+export default PrivateRoute;

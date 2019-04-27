@@ -6,107 +6,101 @@ import { graphql } from 'gatsby';
 import { connect } from 'react-redux';
 
 const mapStateToProps = ({ loggedIn }) => {
-    return { loggedIn };
+  return { loggedIn };
 };
 
 class IndexPage extends React.Component {
-    constructor(props) {
-        super(props);
-        console.log(props);
-    }
+  constructor(props) {
+    super(props);
+    console.log(props);
+  }
 
-    state = {
-        loading: false,
-        error: false,
-        pupper: {
-            img: '',
-            breed: '',
-        },
-    };
+  state = {
+    loading: false,
+    error: false,
+    pupper: {
+      img: '',
+      breed: '',
+    },
+  };
 
-    componentDidMount() {
-        this.fetchRicksPupper();
-    }
+  componentDidMount() {
+    this.fetchRicksPupper();
+  }
 
-    render() {
+  render() {
+    const {
+      rickAndMorty: { character },
+    } = this.props.data;
+
+    const { img, breed } = this.state.pupper;
+    const loading = this.state.loading;
+
+    return (
+      <Layout>
+        <SEO title="Home" keywords={[`gatsby`, `application`, `react`]} />
+        <h1>Hello {props.loggedIn ? 'user' : 'world'}!</h1>
+        <span>ENV: {`${process.env.GATSBY_ENV}`}</span>
+        <h2>{character.name} With His Pupper</h2>
+        <p>Rick & Morty API data loads at build time.</p>
+        <div>
+          <img
+            src={character.image}
+            alt={character.name}
+            style={{ width: 300 }}
+          />
+        </div>
+        <div>
+          {loading ? (
+            <p>Please hold, pupper incoming!</p>
+          ) : img && breed ? (
+            <>
+              <h2>{`${breed} pupper!`}</h2>
+              <img src={img} alt={`cute random `} style={{ maxWidth: 300 }} />
+            </>
+          ) : (
+            <p>Oh noes, error fetching pupper :(</p>
+          )}
+        </div>
+      </Layout>
+    );
+  }
+
+  // This is an example of using a REST API to grab live data
+  fetchRicksPupper = () => {
+    this.setState({ loading: true });
+    axios
+      .get(`https://dog.ceo/api/breeds/image/random`)
+      .then(pupper => {
         const {
-            rickAndMorty: { character },
-        } = this.props.data;
-
-        const { img, breed } = this.state.pupper;
-
-        return (
-            <Layout>
-                <SEO
-                    title="Home"
-                    keywords={[`gatsby`, `application`, `react`]}
-                />
-                <h1>Hello {props.loggedIn ? 'user' : 'world'}!</h1>
-                <span>ENV: {`${process.env.GATSBY_ENV}`}</span>
-                <h2>{character.name} With His Pupper</h2>
-                <p>Rick & Morty API data loads at build time.</p>
-                <div>
-                    <img
-                        src={character.image}
-                        alt={character.name}
-                        style={{ width: 300 }}
-                    />
-                </div>
-                <div>
-                    {this.state.loading ? (
-                        <p>Please hold, pupper incoming!</p>
-                    ) : img && breed ? (
-                        <>
-                            <h2>{`${breed} pupper!`}</h2>
-                            <img
-                                src={img}
-                                alt={`cute random `}
-                                style={{ maxWidth: 300 }}
-                            />
-                        </>
-                    ) : (
-                        <p>Oh noes, error fetching pupper :(</p>
-                    )}
-                </div>
-            </Layout>
-        );
-    }
-
-    // This is an example of using a REST API to grab live data
-    fetchRicksPupper = () => {
-        this.setState({ loading: true });
-        axios
-            .get(`https://dog.ceo/api/breeds/image/random`)
-            .then(pupper => {
-                const {
-                    data: { message: img },
-                } = pupper;
-                const breed = img.split('/')[4];
-                this.setState({
-                    loading: false,
-                    pupper: {
-                        ...this.state.pupper,
-                        img,
-                        breed,
-                    },
-                });
-            })
-            .catch(error => {
-                this.setState({ loading: false, error });
-            });
-    };
+          data: { message: img },
+        } = pupper;
+        const breed = img.split('/')[4];
+        this.setState({
+          loading: false,
+          pupper: {
+            ...this.state.pupper,
+            img,
+            breed,
+          },
+        });
+      })
+      .catch(error => {
+        this.setState({ loading: false, error });
+      });
+  };
 }
 
 // This query is executed at build time by Gatsby.
 export const GatsbyQuery = graphql`
-    {
-        rickAndMorty {
-            character(id: 1) {
-                name
-                image
-            }
-        }
+  {
+    rickAndMorty {
+      character(id: 1) {
+        name
+        image
+      }
     }
+  }
 `;
 
 export default connect(mapStateToProps)(IndexPage);

@@ -1,4 +1,4 @@
-import React from "react"
+import React from 'react';
 
 const Profile = () => (
   <>
@@ -8,6 +8,6 @@ const Profile = () => (
       <li>E-mail: Email</li>
     </ul>
   </>
-)
+);
 
-export default Profile
+export default Profile;
