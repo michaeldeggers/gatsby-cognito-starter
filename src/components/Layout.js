@@ -14,7 +14,7 @@ import NavBar from './NavBar';
 import Header from './Header';
 import './Layout.css';
 
-const Layout = ({ children, props }) => (
+const Layout = ({ children }) => (
   <StaticQuery
     query={graphql`
       query SiteTitleQuery {
@@ -36,7 +36,7 @@ const Layout = ({ children, props }) => (
             paddingTop: 0,
           }}
         >
-          <NavBar props={props} />
+          <NavBar />
           <main>{children}</main>
           <footer>
             © {getYear()}, Built with

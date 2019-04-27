@@ -4,6 +4,7 @@ import { navigate } from 'gatsby';
 const isBrowser = () => typeof window !== 'undefined';
 
 const PrivateRoute = ({ component: Component, props, ...rest }) => {
+  console.log(props);
   if (
     !props.isAuthenticated &&
     isBrowser &&

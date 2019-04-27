@@ -51,9 +51,9 @@ class App extends React.Component {
 
     return (
       !this.state.isAuthenticating && (
-        <Layout props={childProps}>
+        <Layout>
           <Router>
-            <PrivateRoute path="/app/profile" component={Profile} />
+            <PrivateRoute path="/app/profile" props={childProps} component={Profile} />
             <Login path="/app/login" />
           </Router>
         </Layout>
