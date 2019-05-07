@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { isBrowser } from '../utils/auth';
 import { Auth } from 'aws-amplify';
 import { connect } from 'react-redux';
+import Button from 'react-bootstrap/Button';
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -17,7 +18,7 @@ class SignInButton extends Component {
     console.log(props);
   }
   render() {
-    return <button onClick={this.signIn}>Sign in</button>;
+    return <Button variant="primary" onClick={this.signIn}>Sign in</Button>;
   }
 
   signIn = () => {

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Auth } from 'aws-amplify';
 import { connect } from 'react-redux';
+import { Button } from 'react-bootstrap';
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -12,7 +13,7 @@ const mapDispatchToProps = dispatch => {
 
 class SignOutButton extends Component {
   render() {
-    return <button onClick={this.signOut}>Sign out</button>;
+    return <Button variant="dark" onClick={this.signOut}>Sign out</Button>;
   }
 
   signOut = () => {

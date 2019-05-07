@@ -8,6 +8,7 @@
 import wrapWithProvider from './wrap-with-provider';
 import Amplify from 'aws-amplify';
 import { isBrowser } from './src/utils/auth';
+import 'bootstrap/dist/css/bootstrap.css';
 
 const REGION = process.env.GATSBY_REGION || null;
 const USER_POOL_ID = process.env.GATSBY_USER_POOL_ID || null;
