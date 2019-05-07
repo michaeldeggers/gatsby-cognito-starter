@@ -2,36 +2,39 @@
 FROM node:8 as builder
 WORKDIR /app
 COPY package*.json ./
-COPY tls-ca-bundle.pem .
-RUN npm config set strict-ssl=false && \
-    npm install --no-progress
+RUN npm install --no-progress
 COPY . .
 RUN npm run build
 
 # => Run container
-FROM nginx:alpine
+FROM nginx:latest
+
+RUN apk add --update \
+    curl \
+    && rm -rf /var/cache/apk/*
 
 # Nginx config
 RUN rm -rf /etc/nginx/conf.d
 COPY conf /etc/nginx
 
+### Setup user for build execution and application runtime
+ENV APP_ROOT=/opt/app-root
+ENV PATH=${APP_ROOT}/bin:${PATH} HOME=${APP_ROOT}
+COPY bin/ ${APP_ROOT}/bin/
+RUN chmod -R u+x ${APP_ROOT}/bin  && \
+    chgrp -R 0 ${APP_ROOT} /var/cache/nginx /var/run /var/log/nginx && \
+    chmod -R g=u ${APP_ROOT} /etc/passwd /var/cache/nginx /var/run /var/log/nginx
+
+### Containers should NOT run as root as a good practice
+USER 10001
+WORKDIR ${APP_ROOT}
+
+# comment user directive as master process is run as user in OpenShift anyhow
+RUN sed -i.bak 's/^user/#user/' /etc/nginx/nginx.conf
+
 # Static build
 COPY --from=builder /app/public /usr/share/nginx/html/
 
-# Default port exposure
-EXPOSE 80
-
-# Initialize environment variables into filesystem
-WORKDIR /usr/share/nginx/html
-COPY ./env.sh .
-COPY .env .
-
-# Add bash
-RUN apk add --no-cache bash
-
-# Run script which initializes env vars to fs
-RUN chmod +x env.sh
-# RUN ./env.sh
-
+ENTRYPOINT [ "uid_entrypoint" ]
 # Start Nginx server
-CMD ["/bin/bash", "-c", "/usr/share/nginx/html/env.sh && nginx -g \"daemon off;\""]
+CMD ["nginx","-g","daemon off;"]
