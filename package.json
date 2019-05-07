@@ -1,9 +1,9 @@
 {
   "name": "gatsby-starter-default",
   "private": true,
-  "description": "A simple starter to get up and developing quickly with Gatsby",
+  "description": "Based on Default Gatsby Starter. Adds Cognito Integration and Bootstrap CSS.",
   "version": "0.1.0",
-  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "author": "Michael Eggers <michael.d.eggers@gmail.com>",
   "dependencies": {
     "aws-amplify": "^1.1.26",
     "axios": "^0.18.0",
@@ -47,9 +47,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/gatsbyjs/gatsby-starter-default"
+    "url": "https://github.com/michaeldeggers/gatsby-starter-cognito"
   },
   "bugs": {
-    "url": "https://github.com/gatsbyjs/gatsby/issues"
+    "url": "https://github.com/michaeldeggers/gatsby-starter-cognito/issues"
   }
 }
